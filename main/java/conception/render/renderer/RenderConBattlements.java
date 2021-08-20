@@ -1,41 +1,30 @@
 package conception.render.renderer;
 
-import org.lwjgl.opengl.GL11;
-
 import conception.mainRegistry;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
-public class RenderConPipe implements ISimpleBlockRenderingHandler {
+public class RenderConBattlements implements ISimpleBlockRenderingHandler {
 	int renderType = 0;
 	double sinTheta = 0;
 	double cosTheta = 0;
 	
-	public RenderConPipe(int r) {
+	public RenderConBattlements(int r) {
 		renderType = r;
 	}
 
-	@Override
+	
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
-		switch(metadata) {
-		case 0:{ renderer.renderBlockAsItem(Blocks.planks, 0, 1.0F);   break;}
-		case 1:{ renderer.renderBlockAsItem(Blocks.planks, 1, 1.0F);   break;}
-		case 2:{ renderer.renderBlockAsItem(Blocks.planks, 2, 1.0F);   break;}
-		case 3:{ renderer.renderBlockAsItem(Blocks.planks, 3, 1.0F);   break;}
-		case 4:{ renderer.renderBlockAsItem(Blocks.planks, 4, 1.0F);   break;}
-		case 5:{ renderer.renderBlockAsItem(Blocks.planks, 5, 1.0F);   break;}
-		case 6:{ renderer.renderBlockAsItem(Blocks.sandstone, 1, 1.0F);   break;}
-		case 7:{ renderer.renderBlockAsItem(Blocks.double_stone_slab, 0, 1.0F);   break;}
-		case 8:{ renderer.renderBlockAsItem(Blocks.quartz_block, 1, 1.0F);   break;}
-		case 9:{ renderer.renderBlockAsItem(Blocks.nether_brick, 0, 1.0F);   break;}
-		case 10:{ renderer.renderBlockAsItem(Blocks.iron_block, 0, 1.0F);   break;}
-		}
+	    renderer.renderBlockAsItem(mainRegistry.blockConBattlements, 1, 1.0F);
 	}
 
 	@Override
@@ -44,118 +33,30 @@ public class RenderConPipe implements ISimpleBlockRenderingHandler {
 
 		
 		Tessellator tessellator = Tessellator.instance;
-		int lightValue = (int) (block.getMixedBrightnessForBlock(world, x, y, z)*0.8);
+		int lightValue = block.getMixedBrightnessForBlock(world, x, y, z);
 		int part = world.getBlockMetadata(x, y, z);
-		IIcon sideIron = Blocks.double_stone_slab.getIcon(0,5);
-		IIcon topIcon = Blocks.stonebrick.getIcon(0,1);
-		tessellator.setBrightness(lightValue);
+		tessellator.setBrightness(lightValue-2);
 		tessellator.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-		
     	int type = 0;
-		
-		/**
-		 *  north 0
-		 *  south 84.822
-		 *  east  84.822/2
-		 *  west  84.822+84.822/2
-		 **/
 		double theta = 0;
 		int ax = 0;
 		switch(part) {
-		case 0:{ theta = 0;  ax = 2;type = 1; break;}
-		case 1:{ theta = 84.822;  ax = 2;type = 1;  break;}
-		case 2:{ theta = 84.822/2;  ax = 2;type = 1;  break;}
-		case 3:{ theta = 84.822+84.822/2;  ax = 2;type = 1;  break;}
-		case 4:{ theta = 0;  ax = 2;type = 2; break;}
-		case 5:{ theta = 84.822;  ax = 2;type = 2;  break;}
-		case 6:{ theta = 84.822/2;  ax = 2;type = 2;  break;}
-		case 7:{ theta = 84.822+84.822/2;  ax = 2;type = 2;  break;}
-		case 8:{ theta = 0;  ax = 2;type = 3; break;}
-		case 9:{ theta = 84.822;  ax = 2;type = 3; break;}
-		case 10:{ theta = 84.822/2;  ax = 2;type = 3; break;}
-		case 11:{ theta = 84.822+84.822/2;  ax = 2;type = 3; break;}
+		case 0:{ theta = 0;  ax = 2;type = 2; break;}
+		case 1:{ theta = 84.822;  ax = 2;type = 2;  break;}
+		case 2:{ theta = 84.822/2;  ax = 2;type = 2;  break;}
+		case 3:{ theta = 84.822+84.822/2;  ax = 2;type = 2;  break;}
+		case 4:{ theta = 0;  ax = 2;type = 3; break;}
+		case 5:{ theta = 84.822;  ax = 2;type = 3; break;}
+		case 6:{ theta = 84.822/2;  ax = 2;type = 3; break;}
+		case 7:{ theta = 84.822+84.822/2;  ax = 2;type = 3; break;}
+		case 8:{ theta = 0;  ax = 2;type = 1; break;}
+		case 9:{ theta = 84.822;  ax = 2;type = 1;  break;}
+		case 10:{ theta = 84.822/2;  ax = 2;type = 1;  break;}
+		case 11:{ theta = 84.822+84.822/2;  ax = 2;type = 1;  break;}
 		}
 		sinTheta = Math.sin(theta);
 		cosTheta = Math.cos(theta);
-		
-		
-		
-		
-		
-			//------------------base
-		/*
-	addVertex(tessellator,0.5, -0.5, 0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMaxU(),sideIron.getMaxV());
-	addVertex(tessellator,0.5, 0.1, 0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMaxU(),  (float) (sideIron.getMinV()+0.025));
-	addVertex(tessellator,-0.5, 0.1, 0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMinU(),  (float) (sideIron.getMinV()+0.025));
-	addVertex(tessellator,-0.5, -0.5, 0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMinU(),sideIron.getMaxV());
-		
-	addVertex(tessellator,0.5, 0.1, 0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMaxU(), (float) (sideIron.getMaxV()-0.041));
-	addVertex(tessellator,0.5, 0.7, 0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMaxU(),  (float) (sideIron.getMinV()+0.00));
-	addVertex(tessellator,0.5, 0.7, 0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMaxU(),  (float) (sideIron.getMinV()+0.00));
-	addVertex(tessellator,-0.5, 0.1, 0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMinU(), (float) (sideIron.getMaxV()-0.041));
 
-	addVertex(tessellator,-0.5, -0.5, -0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMaxU(),sideIron.getMaxV());
-	addVertex(tessellator,-0.5, 0.1, -0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMaxU(),  (float) (sideIron.getMinV()+0.025));
-	addVertex(tessellator,0.5, 0.1, -0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMinU(),  (float) (sideIron.getMinV()+0.025));
-	addVertex(tessellator,0.5, -0.5, -0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMinU(),sideIron.getMaxV());
-		
-	addVertex(tessellator,-0.5, 0.1, -0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMaxU(), (float) (sideIron.getMaxV()-0.041));
-	addVertex(tessellator,0.5, 0.7, -0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMaxU(),  (float) (sideIron.getMinV()+0.00));
-	addVertex(tessellator,0.5, 0.7, -0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMinU(),  (float) (sideIron.getMinV()+0.00));
-	addVertex(tessellator,0.5, 0.1, -0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMinU(), (float) (sideIron.getMaxV()-0.041));
-		
-	addVertex(tessellator,-0.5, -0.5, 0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMaxU(),sideIron.getMaxV());
-	addVertex(tessellator,-0.5, 0.1, 0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMaxU(),  (float) (sideIron.getMinV()+0.025));
-	addVertex(tessellator,-0.5, 0.1, -0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMinU(),  (float) (sideIron.getMinV()+0.025));
-	addVertex(tessellator,-0.5, -0.5, -0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMinU(),sideIron.getMaxV());
-
-		
-	addVertex(tessellator,0.5, -0.5, -0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMaxU(),sideIron.getMaxV());
-	addVertex(tessellator,0.5, 0.1, -0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMaxU(),  (float) (sideIron.getMinV()+0.025));
-	addVertex(tessellator,0.5, 0.1, 0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMinU(),  (float) (sideIron.getMinV()+0.025));
-	addVertex(tessellator,0.5, -0.5, 0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMinU(),sideIron.getMaxV());
-		
-	addVertex(tessellator,0.5, 0.1, -0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMaxU(), (float) (sideIron.getMaxV()-0.041));
-	addVertex(tessellator,0.5, 0.7, -0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMaxU(),  (float) (sideIron.getMinV()+0.00));
-	addVertex(tessellator,0.5, 0.7, 0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMinU(),  (float) (sideIron.getMinV()+0.00));
-	addVertex(tessellator,0.5, 0.1, 0.5,x+0.5,y+0.5,z+0.5,ax,  sideIron.getMinU(), (float) (sideIron.getMaxV()-0.041));
-		
-	addVertex(tessellator,0.5, -0.5, -0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMaxU(),sideIron.getMaxV());
-	addVertex(tessellator,0.5, -0.5, 0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMaxU(), sideIron.getMinV());
-	addVertex(tessellator,-0.5, -0.5, 0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMinU(),sideIron.getMinV());
-	addVertex(tessellator,-0.5, -0.5, -0.5,x+0.5,y+0.5,z+0.5,ax, sideIron.getMinU(),sideIron.getMaxV());
-		//------------------top
-		
-	addVertex(tessellator,0.5, 0.7, 0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMaxU(), (float) (topIcon.getMaxV()-0));
-	addVertex(tessellator,0.5, 0.9, 0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMaxU(), topIcon.getMinV());
-	addVertex(tessellator,-0.6, 0.24, 0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMinU(), topIcon.getMinV());
-	addVertex(tessellator,-0.6, 0.04, 0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMinU(), (float) (topIcon.getMaxV()-0));
-
-	addVertex(tessellator,0.5, 0.9, 0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMaxU(), (float) (topIcon.getMaxV()-0));
-	addVertex(tessellator,0.5, 0.9, -0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMaxU(), topIcon.getMinV());
-	addVertex(tessellator,-0.6, 0.24, -0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMinU(), topIcon.getMinV());
-	addVertex(tessellator,-0.6, 0.24, 0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMinU(), (float) (topIcon.getMaxV()-0));
-		
-	addVertex(tessellator,0.5, 0.7, -0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMaxU(), (float) (topIcon.getMaxV()-0));
-	addVertex(tessellator,0.5, 0.9, -0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMaxU(), topIcon.getMinV());
-	addVertex(tessellator,0.5, 0.9, 0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMinU(), topIcon.getMinV());
-	addVertex(tessellator,0.5, 0.7, 0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMinU(), (float) (topIcon.getMaxV()-0));
-		
-	addVertex(tessellator,-0.6, 0.04, 0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMaxU(), (float) (topIcon.getMaxV()-0));
-	addVertex(tessellator,-0.6, 0.24, 0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMaxU(), topIcon.getMinV());
-	addVertex(tessellator,-0.6, 0.24, -0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMinU(), topIcon.getMinV());
-	addVertex(tessellator,-0.6, 0.04, -0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMinU(), (float) (topIcon.getMaxV()-0));
-		
-	addVertex(tessellator,-0.6, 0.04, -0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMaxU(), (float) (topIcon.getMaxV()-0));
-	addVertex(tessellator,-0.5, 0.1, -0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMaxU(), topIcon.getMinV());
-	addVertex(tessellator,-0.5, 0.1, 0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMinU(), topIcon.getMinV());
-	addVertex(tessellator,-0.6, 0.04, 0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMinU(), (float) (topIcon.getMaxV()-0));
-		
-	addVertex(tessellator,-0.6, 0.04, -0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMaxU(), (float) (topIcon.getMaxV()-0));
-	addVertex(tessellator,-0.6, 0.24, -0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMaxU(), topIcon.getMinV());
-	addVertex(tessellator,0.5, 0.9, -0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMinU(), topIcon.getMinV());
-	addVertex(tessellator,0.5, 0.7, -0.5,x+0.5,y+0.5,z+0.5,ax, topIcon.getMinU(), (float) (topIcon.getMaxV()-0));
-		*/
 if(type == 1) {
 addVertex(tessellator,0.5,0.5002503490146017,0.4997495255733308,x+0.5,y+0.5,z+0.5,ax, 0.65623045,0.31246093);
 addVertex(tessellator,0.5,0.4999498549498392,-0.10025039917942871,x+0.5,y+0.5,z+0.5,ax, 0.65623045,0.27503908);
@@ -332,12 +233,7 @@ addVertex(tessellator,0.5,-0.6984943714927223,0.5021011979601191,x+0.5,y+0.5,z+0
 }
 		
 		return true;
-	}
-
-	private boolean check(Block block) {
-		// TODO Auto-generated method stub
-		return block == mainRegistry.blockConSmoke || block.getMaterial() == Material.gourd;
-	}
+}
 	
 	private void addVertex(Tessellator tessellator,double x ,double y,double z,double positionx,double positiony,double positionz, int ax, double d, double e) {
 
@@ -355,12 +251,11 @@ addVertex(tessellator,0.5,-0.6984943714927223,0.5021011979601191,x+0.5,y+0.5,z+0
 				 posz = z * cosTheta - x * sinTheta;		
 			}
 			tessellator.addVertexWithUV(positionx+posx, positiony+posy, positionz+posz, d,e);  
-			//System.out.println("addVertex(tessellator,"+posx+","+posy+","+posz+",x+0.5,y+0.5,z+0.5,ax, "+d+","+e+");");
 	}
 
 	@Override
 	public boolean shouldRender3DInInventory(int modelId) {
-		return true;
+		return false;
 	}
 
 	@Override

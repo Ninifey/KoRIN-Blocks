@@ -10,19 +10,21 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemLead;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockConPipe extends Block
+public class BlockConBattlements extends Block
 {
 
-    public static final String[] field_150096_a = new String[] {"oak_thatch", "spruce_thatch", "birch_thatch", "jungle_thatch", "acacia_thatch", "big_oak_thatch","default", "mossy", "cracked", "chiseled", "glass"};
+    public static final String[] field_150096_a = new String[] {"oak_Battlements", "spruce_Battlements", "birch_Battlements", "jungle_Battlements", "acacia_Battlements", "big_oak_Battlements","default", "mossy", "cracked", "chiseled", "glass"};
 	private String b;
 	public static int  rendtype;
 	public static Block instance;
@@ -31,7 +33,7 @@ public class BlockConPipe extends Block
     private IIcon[] field_150095_b;
     private static final String __OBFID = "CL_00000335";
     
-    public BlockConPipe(String Texturename) 
+    public BlockConBattlements(String Texturename) 
     {
         super(Material.iron);
            setStepSound(Block.soundTypeStone);
@@ -78,16 +80,60 @@ public class BlockConPipe extends Block
 
         for (int i = 0; i < this.field_150095_b.length; ++i)
         {
-        	if(i== 0) {
-                this.field_150095_b[i] = p_149651_1_.registerIcon(CONMAIN.MODID+":smoke");
-        	}else if (i==1) {
-                this.field_150095_b[i] = p_149651_1_.registerIcon(CONMAIN.MODID+":smoke_2");
-        	}else {
-                this.field_150095_b[i] = p_149651_1_.registerIcon(CONMAIN.MODID+":smoke");
-        	}
+                this.field_150095_b[i] = p_149651_1_.registerIcon(CONMAIN.MODID+":battlements");
+        	
         }
     }
 
+    public void onBlockPlacedBy(World p_149689_1_, int p_149689_2_, int p_149689_3_, int p_149689_4_, EntityLivingBase p_149689_5_, ItemStack p_149689_6_)
+    {
+        int l = MathHelper.floor_double((double)(p_149689_5_.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        int l2 = MathHelper.floor_double((double)(p_149689_5_.rotationPitch * 4.0F / 180.0F) + 0.5D) & 2;
+        int i1 = p_149689_1_.getBlockMetadata(p_149689_2_, p_149689_3_, p_149689_4_) & 4;
+        if(l2 == 0) {
+        if (l == 0)
+        {
+            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 2 | i1, 2);
+        }
+
+        if (l == 1)
+        {
+            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 1 | i1, 2);
+        }
+
+        if (l == 2)
+        {
+            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 3 | i1, 2);
+        }
+
+        if (l == 3)
+        {
+            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 0 | i1, 2);
+        }
+        }else  if(l2 == 2) {
+            if (l == 0)
+            {
+                p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 6 | i1, 2);
+            }
+
+            if (l == 1)
+            {
+                p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 5 | i1, 2);
+            }
+
+            if (l == 2)
+            {
+                p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 7 | i1, 2);
+            }
+
+            if (l == 3)
+            {
+                p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 4 | i1, 2);
+            }
+    	
+        }
+    	System.out.println("Set Meta to "+p_149689_1_.getBlockMetadata(p_149689_2_, p_149689_3_, p_149689_4_)+" pitch "+l2);	
+    }
 
     /**
      * Is this block (a) opaque and (b) a full 1m cube?  This determines whether or not to render the shared face of two

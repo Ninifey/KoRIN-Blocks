@@ -1,7 +1,11 @@
 package conception;
 
+import conception.Blocks.BlockConBattlements;
+import conception.Blocks.BlockConPipe;
 import conception.Blocks.BlockConSmoke;
 import conception.Blocks.BlockConWall;
+import conception.Blocks.ItemBlockConBattlements;
+import conception.Blocks.ItemBlockConPipe;
 import conception.Blocks.ItemBlockConSmoke;
 import conception.Blocks.ItemBlockConWall;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -11,7 +15,7 @@ import net.minecraft.item.ItemStack;
 
 public class mainRegistry {
 
-	public static Block blockWall,blockConSmoke;
+	public static Block blockWall,blockConSmoke,blockConPipe,blockConBattlements;
 	
 	public mainRegistry() {
 		BlockRegistry();
@@ -39,6 +43,12 @@ public class mainRegistry {
 			
 			blockConSmoke = new BlockConSmoke("BlockConSmoke").setBlockName("BlockConSmoke");
 			GameRegistry.registerBlock(blockConSmoke, ItemBlockConSmoke.class, "ItemBlockConSmoke");
+			
+			blockConPipe = new BlockConPipe("BlockConPipe").setBlockName("BlockConPipe");
+			GameRegistry.registerBlock(blockConPipe, ItemBlockConPipe.class, "ItemBlockConPipe");
+
+			blockConBattlements = new BlockConBattlements("BlockConBattlements").setBlockName("BlockConBattlements").setLightOpacity(0).setLightLevel(0);
+			GameRegistry.registerBlock(blockConBattlements, ItemBlockConBattlements.class, "ItemBlockConBattlements");
 
 		}
 

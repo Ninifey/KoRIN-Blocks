@@ -10,3 +10,4 @@ tile.ConWall.8.name=Quartz Wall
 tile.ConWall.9.name=Netherbrick Wall
 tile.ConWall.10.name=Iron Wall
 itemGroup.KoRIN=Kingdome of RIN Blocks
+tile.BlockConBattlements.0.name=Sandstone Battlements
