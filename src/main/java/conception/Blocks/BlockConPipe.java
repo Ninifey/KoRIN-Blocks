@@ -114,7 +114,7 @@ public class BlockConPipe extends Block
 			if(Zminus && Zplus) {world.setBlockMetadataWithNotify(x, y, z, 1, 2);}
 			if(Yminus && Yplus) {world.setBlockMetadataWithNotify(x, y, z, 2, 2);}
 		}else if(temp>1){
-			world.setBlockMetadataWithNotify(x, y, z, 4, 2);
+			world.setBlockMetadataWithNotify(x, y, z, 3, 2);
 		}else {
 			if(Xminus || Xplus) {world.setBlockMetadataWithNotify(x, y, z, 0, 2);}
 			if(Zminus || Zplus) {world.setBlockMetadataWithNotify(x, y, z, 1, 2);}
