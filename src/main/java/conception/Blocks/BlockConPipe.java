@@ -10,19 +10,21 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemLead;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockConPipe extends Block
 {
 
-    public static final String[] field_150096_a = new String[] {"oak_thatch", "spruce_thatch", "birch_thatch", "jungle_thatch", "acacia_thatch", "big_oak_thatch","default", "mossy", "cracked", "chiseled", "glass"};
+    public static final String[] field_150096_a = new String[] {"Xstraight","Ystraight","Zstraight","Corner"};
 	private String b;
 	public static int  rendtype;
 	public static Block instance;
@@ -61,16 +63,65 @@ public class BlockConPipe extends Block
         p_149666_3_.add(new ItemStack(p_149666_1_, 1, 1));
         p_149666_3_.add(new ItemStack(p_149666_1_, 1, 2));
         p_149666_3_.add(new ItemStack(p_149666_1_, 1, 3));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 4));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 5));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 6));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 7));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 8));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 9));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 10));
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 11));
     }
+    
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase p_149689_5_, ItemStack p_149689_6_)
+    {
+    	int temp = 0;
+		boolean  Xminus = world.getBlock(x-1, y, z)==mainRegistry.blockConPipe;
+		if(Xminus) {++temp;}
+		boolean  Xplus = world.getBlock(x+1, y, z)==mainRegistry.blockConPipe;
+		if(Xplus) {++temp;}
+		boolean  Yminus = world.getBlock(x, y-1, z)==mainRegistry.blockConPipe;
+		if(Yminus) {++temp;}
+		boolean  Yplus = world.getBlock(x, y+1, z)==mainRegistry.blockConPipe;
+		if(Yplus) {++temp;}
+		boolean  Zminus = world.getBlock(x, y, z-1)==mainRegistry.blockConPipe;
+		if(Zminus) {++temp;}
+		boolean  Zplus = world.getBlock(x, y, z+1)==mainRegistry.blockConPipe; 
+		if(Zplus) {++temp;}
 
+		if(temp==2 && ((Xminus && Xplus) || (Yminus && Yplus) || (Zminus && Zplus))) {
+			if(Xminus && Xplus) {world.setBlockMetadataWithNotify(x, y, z, 0, 2);}
+			if(Zminus && Zplus) {world.setBlockMetadataWithNotify(x, y, z, 1, 2);}
+			if(Yminus && Yplus) {world.setBlockMetadataWithNotify(x, y, z, 2, 2);}
+		}else if(temp>1){
+			world.setBlockMetadataWithNotify(x, y, z, 3, 2);
+		}else {
+			if(Xminus || Xplus) {world.setBlockMetadataWithNotify(x, y, z, 0, 2);}
+			if(Zminus || Zplus) {world.setBlockMetadataWithNotify(x, y, z, 1, 2);}
+			if(Yminus || Yplus) {world.setBlockMetadataWithNotify(x, y, z, 2, 2);}
+		}
+    }
+    
+    public void onNeighborBlockChange(World world, int x, int y, int z, Block p_149695_5_) {
+    	int temp = 0;
+		boolean  Xminus = world.getBlock(x-1, y, z)==mainRegistry.blockConPipe;
+		if(Xminus) {++temp;}
+		boolean  Xplus = world.getBlock(x+1, y, z)==mainRegistry.blockConPipe;
+		if(Xplus) {++temp;}
+		boolean  Yminus = world.getBlock(x, y-1, z)==mainRegistry.blockConPipe;
+		if(Yminus) {++temp;}
+		boolean  Yplus = world.getBlock(x, y+1, z)==mainRegistry.blockConPipe;
+		if(Yplus) {++temp;}
+		boolean  Zminus = world.getBlock(x, y, z-1)==mainRegistry.blockConPipe;
+		if(Zminus) {++temp;}
+		boolean  Zplus = world.getBlock(x, y, z+1)==mainRegistry.blockConPipe; 
+		if(Zplus) {++temp;}
+
+		if(temp==2 && ((Xminus && Xplus) || (Yminus && Yplus) || (Zminus && Zplus))) {
+			if(Xminus && Xplus) {world.setBlockMetadataWithNotify(x, y, z, 0, 2);}
+			if(Zminus && Zplus) {world.setBlockMetadataWithNotify(x, y, z, 1, 2);}
+			if(Yminus && Yplus) {world.setBlockMetadataWithNotify(x, y, z, 2, 2);}
+		}else if(temp>1){
+			world.setBlockMetadataWithNotify(x, y, z, 4, 2);
+		}else {
+			if(Xminus || Xplus) {world.setBlockMetadataWithNotify(x, y, z, 0, 2);}
+			if(Zminus || Zplus) {world.setBlockMetadataWithNotify(x, y, z, 1, 2);}
+			if(Yminus || Yplus) {world.setBlockMetadataWithNotify(x, y, z, 2, 2);}
+		}
+    }
+    
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister p_149651_1_)
     {
@@ -78,13 +129,7 @@ public class BlockConPipe extends Block
 
         for (int i = 0; i < this.field_150095_b.length; ++i)
         {
-        	if(i== 0) {
-                this.field_150095_b[i] = p_149651_1_.registerIcon(CONMAIN.MODID+":smoke");
-        	}else if (i==1) {
-                this.field_150095_b[i] = p_149651_1_.registerIcon(CONMAIN.MODID+":smoke_2");
-        	}else {
-                this.field_150095_b[i] = p_149651_1_.registerIcon(CONMAIN.MODID+":smoke");
-        	}
+                this.field_150095_b[i] = p_149651_1_.registerIcon(CONMAIN.MODID+":pipe");	
         }
     }
 

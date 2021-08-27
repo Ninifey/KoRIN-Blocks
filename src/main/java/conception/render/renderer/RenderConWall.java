@@ -1,5 +1,7 @@
 package conception.render.renderer;
 
+import org.lwjgl.opengl.GL11;
+
 import conception.mainRegistry;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
@@ -19,19 +21,61 @@ public class RenderConWall implements ISimpleBlockRenderingHandler {
 
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
+
+		IIcon sideIron = Blocks.iron_block.getIcon(0,0);
 		switch(metadata) {
-		case 0:{ renderer.renderBlockAsItem(Blocks.planks, 0, 1.0F);   break;}
-		case 1:{ renderer.renderBlockAsItem(Blocks.planks, 1, 1.0F);   break;}
-		case 2:{ renderer.renderBlockAsItem(Blocks.planks, 2, 1.0F);   break;}
-		case 3:{ renderer.renderBlockAsItem(Blocks.planks, 3, 1.0F);   break;}
-		case 4:{ renderer.renderBlockAsItem(Blocks.planks, 4, 1.0F);   break;}
-		case 5:{ renderer.renderBlockAsItem(Blocks.planks, 5, 1.0F);   break;}
-		case 6:{ renderer.renderBlockAsItem(Blocks.sandstone, 1, 1.0F);   break;}
-		case 7:{ renderer.renderBlockAsItem(Blocks.double_stone_slab, 0, 1.0F);   break;}
-		case 8:{ renderer.renderBlockAsItem(Blocks.quartz_block, 1, 1.0F);   break;}
-		case 9:{ renderer.renderBlockAsItem(Blocks.nether_brick, 0, 1.0F);   break;}
-		case 10:{ renderer.renderBlockAsItem(Blocks.iron_block, 0, 1.0F);   break;}
+		case 0:{ sideIron = Blocks.planks.getIcon(0,0);    break;}
+		case 1:{ sideIron = Blocks.planks.getIcon(0,1);    break;}
+		case 2:{ sideIron = Blocks.planks.getIcon(0,2);    break;}
+		case 3:{ sideIron = Blocks.planks.getIcon(0,3);    break;}
+		case 4:{ sideIron = Blocks.planks.getIcon(0,4);    break;}
+		case 5:{ sideIron = Blocks.planks.getIcon(0,5);    break;}
+		case 6:{ sideIron = Blocks.sandstone.getIcon(0,1);    break;}
+		case 7:{ sideIron = Blocks.double_stone_slab.getIcon(0,0);    break;}
+		case 8:{ sideIron = Blocks.quartz_block.getIcon(0,1);    break;}
+		case 9:{ sideIron = Blocks.nether_brick.getIcon(0,0);    break;}
+		case 10:{ sideIron = Blocks.iron_block.getIcon(0,0);    break;}
 		}
+		GL11.glTranslatef(-0.2F, -0.3F, -0.2F);
+		GL11.glScalef(1.1f, 1.1f, 1.1f);
+		int x = (int) (5f / 16f),y =  (int) (7f / 16f),z =  (int) (5f / 16f);
+		Tessellator tessellator = Tessellator.instance;
+		tessellator.startDrawingQuads();
+		tessellator.setBrightness(4535345);	
+		tessellator.setNormal(0, 1, 0); 
+		tessellator.addVertexWithUV(x+0.25, y, z+0.25, sideIron.getMinU(), sideIron.getMinV());
+		tessellator.addVertexWithUV(x+0.25, y+1, z+0.25, sideIron.getMinU(), sideIron.getMaxV());
+		tessellator.addVertexWithUV(x+0.75, y+1, z+0.25, sideIron.getMaxU(), sideIron.getMaxV());
+		tessellator.addVertexWithUV(x+0.75, y, z+0.25, sideIron.getMaxU(), sideIron.getMinV());
+		
+		tessellator.addVertexWithUV(x+0.25, y, z+0.75, sideIron.getMinU(), sideIron.getMinV());
+		tessellator.addVertexWithUV(x+0.25, y+1, z+0.75, sideIron.getMinU(), sideIron.getMaxV());
+		tessellator.addVertexWithUV(x+0.25, y+1, z+0.25, sideIron.getMaxU(), sideIron.getMaxV());
+		tessellator.addVertexWithUV(x+0.25, y, z+0.25, sideIron.getMaxU(), sideIron.getMinV());
+
+		tessellator.addVertexWithUV(x+0.75, y, z+0.75, sideIron.getMinU(), sideIron.getMinV());
+		tessellator.addVertexWithUV(x+0.75, y+1, z+0.75, sideIron.getMinU(), sideIron.getMaxV());
+		tessellator.addVertexWithUV(x+0.25, y+1, z+0.75, sideIron.getMaxU(), sideIron.getMaxV());
+		tessellator.addVertexWithUV(x+0.25, y, z+0.75, sideIron.getMaxU(), sideIron.getMinV());
+		
+		tessellator.addVertexWithUV(x+0.75, y, z+0.25, sideIron.getMinU(), sideIron.getMinV());
+		tessellator.addVertexWithUV(x+0.75, y+1, z+0.25, sideIron.getMinU(), sideIron.getMaxV());
+		tessellator.addVertexWithUV(x+0.75, y+1, z+0.75, sideIron.getMaxU(), sideIron.getMaxV());
+		tessellator.addVertexWithUV(x+0.75, y, z+0.75, sideIron.getMaxU(), sideIron.getMinV());
+		
+		tessellator.addVertexWithUV(x+0.25, y+1, z+0.25, sideIron.getMinU(), sideIron.getMinV());
+		tessellator.addVertexWithUV(x+0.25, y+1, z+0.75, sideIron.getMinU(), sideIron.getMaxV());
+		tessellator.addVertexWithUV(x+0.75, y+1, z+0.75, sideIron.getMaxU(), sideIron.getMaxV());
+		tessellator.addVertexWithUV(x+0.75, y+1, z+0.25, sideIron.getMaxU(), sideIron.getMinV());
+		
+		tessellator.addVertexWithUV(x+0.25, y, z+0.75, sideIron.getMinU(), sideIron.getMinV());
+		tessellator.addVertexWithUV(x+0.25, y, z+0.25, sideIron.getMinU(), sideIron.getMaxV());
+		tessellator.addVertexWithUV(x+0.75, y, z+0.25, sideIron.getMaxU(), sideIron.getMaxV());
+		tessellator.addVertexWithUV(x+0.75, y, z+0.75, sideIron.getMaxU(), sideIron.getMinV());
+		tessellator.draw();
+		block.setBlockBoundsForItemRender();
+		GL11.glScalef(1f / 1.5f, 1f / 1.5f, 1f / 1.5f);
+		GL11.glTranslatef(0.5F, 1.2F, 0.5F);
 	}
 
 	@Override

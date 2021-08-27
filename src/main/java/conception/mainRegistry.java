@@ -36,6 +36,8 @@ public class mainRegistry {
 			GameRegistry.addRecipe(new ItemStack(blockWall,5,8), new Object[] {"BBB","BBB","B B",'B', new ItemStack(Blocks.quartz_block,0,1)});
 			GameRegistry.addRecipe(new ItemStack(blockWall,5,9), new Object[] {"BBB","BBB","B B",'B', new ItemStack(Blocks.nether_brick,0,0)});
 			GameRegistry.addRecipe(new ItemStack(blockWall,5,10), new Object[] {"BBB","BBB","B B",'B', new ItemStack(Blocks.iron_block,0,0)});
+		
+			GameRegistry.addShapelessRecipe(new ItemStack(blockConBattlements,6,0), new Object[] {new ItemStack(Blocks.sandstone,0,1),new ItemStack(Blocks.sandstone,0,1), new ItemStack(Blocks.sandstone,0,1)});
 	}
 		public void BlockRegistry() {
 			blockWall = new BlockConWall("ConWall").setBlockName("ConWall");
@@ -47,7 +49,7 @@ public class mainRegistry {
 			blockConPipe = new BlockConPipe("BlockConPipe").setBlockName("BlockConPipe");
 			GameRegistry.registerBlock(blockConPipe, ItemBlockConPipe.class, "ItemBlockConPipe");
 
-			blockConBattlements = new BlockConBattlements("BlockConBattlements").setBlockName("BlockConBattlements").setLightOpacity(0).setLightLevel(0);
+			blockConBattlements = new BlockConBattlements("BlockConBattlements").setBlockName("BlockConBattlements");
 			GameRegistry.registerBlock(blockConBattlements, ItemBlockConBattlements.class, "ItemBlockConBattlements");
 
 		}

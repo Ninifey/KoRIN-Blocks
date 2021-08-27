@@ -37,10 +37,9 @@ public class BlockConBattlements extends Block
     {
         super(Material.iron);
            setStepSound(Block.soundTypeStone);
-   		   setCreativeTab(CONMAIN.KoRINTAB);
    		   setBlockName(Texturename);
    		   setLightOpacity(0);
-   		   
+   		   setCreativeTab(CONMAIN.KoRINTAB);
    		   b = Texturename;
    		  
    }
@@ -80,8 +79,15 @@ public class BlockConBattlements extends Block
 
         for (int i = 0; i < this.field_150095_b.length; ++i)
         {
+        	if(i == 0) {
                 this.field_150095_b[i] = p_149651_1_.registerIcon(CONMAIN.MODID+":battlements");
-        	
+        	}else if(i == 1) {
+                this.field_150095_b[i] = p_149651_1_.registerIcon(CONMAIN.MODID+":battlements_2");
+        	}else if(i == 2) {
+                this.field_150095_b[i] = p_149651_1_.registerIcon(CONMAIN.MODID+":battlements_3");
+        	}else if(i == 3) {
+                this.field_150095_b[i] = p_149651_1_.registerIcon(CONMAIN.MODID+":battlements_4");
+        	}
         }
     }
 
@@ -93,12 +99,12 @@ public class BlockConBattlements extends Block
         if(l2 == 0) {
         if (l == 0)
         {
-            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 2 | i1, 2);
+            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 1 | i1, 2);
         }
 
         if (l == 1)
         {
-            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 1 | i1, 2);
+            p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 2 | i1, 2);
         }
 
         if (l == 2)
@@ -113,17 +119,17 @@ public class BlockConBattlements extends Block
         }else  if(l2 == 2) {
             if (l == 0)
             {
-                p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 6 | i1, 2);
+                p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 7 | i1, 2);
             }
 
             if (l == 1)
             {
-                p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 5 | i1, 2);
+                p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 6 | i1, 2);
             }
 
             if (l == 2)
             {
-                p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 7 | i1, 2);
+                p_149689_1_.setBlockMetadataWithNotify(p_149689_2_, p_149689_3_, p_149689_4_, 5 | i1, 2);
             }
 
             if (l == 3)
@@ -132,7 +138,7 @@ public class BlockConBattlements extends Block
             }
     	
         }
-    	System.out.println("Set Meta to "+p_149689_1_.getBlockMetadata(p_149689_2_, p_149689_3_, p_149689_4_)+" pitch "+l2);	
+        System.out.println("Metadata : "+p_149689_1_.getBlockMetadata(p_149689_2_, p_149689_3_, p_149689_4_));
     }
 
     /**

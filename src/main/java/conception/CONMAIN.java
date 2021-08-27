@@ -16,7 +16,7 @@ public class CONMAIN
 {
     public static final String MODID = "korinblocks";
 	public static final String name = "Kingdome of Rin | Blocks";
-    public static final String VERSION = "0.1a";
+    public static final String VERSION = "2.0a";
 
 	public static CONMAIN instance;
 	public static Configuration config;

@@ -116,14 +116,6 @@ public class BlockConSmoke extends Block
     {
         return rendtype;
     }
-    /**
-     * Returns true if the specified block can be connected by a fence
-     */
-    public boolean canConnectFenceTo(IBlockAccess p_149826_1_, int p_149826_2_, int p_149826_3_, int p_149826_4_)
-    {
-        Block block = p_149826_1_.getBlock(p_149826_2_, p_149826_3_, p_149826_4_);
-        return block != this && block != Blocks.fence_gate ? (block.getMaterial().isOpaque() && block.renderAsNormalBlock() ? block.getMaterial() != Material.gourd : false) : true;
-    }
 
     public static boolean func_149825_a(Block p_149825_0_)
     {

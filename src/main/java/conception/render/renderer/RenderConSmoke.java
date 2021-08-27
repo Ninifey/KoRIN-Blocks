@@ -1,5 +1,7 @@
 package conception.render.renderer;
 
+import org.lwjgl.opengl.GL11;
+
 import conception.mainRegistry;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
@@ -21,19 +23,48 @@ public class RenderConSmoke implements ISimpleBlockRenderingHandler {
 
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
-		switch(metadata) {
-		case 0:{ renderer.renderBlockAsItem(Blocks.planks, 0, 1.0F);   break;}
-		case 1:{ renderer.renderBlockAsItem(Blocks.planks, 1, 1.0F);   break;}
-		case 2:{ renderer.renderBlockAsItem(Blocks.planks, 2, 1.0F);   break;}
-		case 3:{ renderer.renderBlockAsItem(Blocks.planks, 3, 1.0F);   break;}
-		case 4:{ renderer.renderBlockAsItem(Blocks.planks, 4, 1.0F);   break;}
-		case 5:{ renderer.renderBlockAsItem(Blocks.planks, 5, 1.0F);   break;}
-		case 6:{ renderer.renderBlockAsItem(Blocks.sandstone, 1, 1.0F);   break;}
-		case 7:{ renderer.renderBlockAsItem(Blocks.double_stone_slab, 0, 1.0F);   break;}
-		case 8:{ renderer.renderBlockAsItem(Blocks.quartz_block, 1, 1.0F);   break;}
-		case 9:{ renderer.renderBlockAsItem(Blocks.nether_brick, 0, 1.0F);   break;}
-		case 10:{ renderer.renderBlockAsItem(Blocks.iron_block, 0, 1.0F);   break;}
-		}
+		GL11.glTranslatef(-0.2F, -0.9F, -0.2F);
+		GL11.glScalef(0.031f, 0.031f, 0.031f);
+		int x = (int) (5f / 16f),y =  (int) (7f / 16f),z =  (int) (5f / 16f);
+		Tessellator tessellator = Tessellator.instance;
+		tessellator.startDrawingQuads();
+		tessellator.setBrightness(4535345);	
+		tessellator.setNormal(0, 1, 0); 
+		double theta =0;
+		IIcon sideIron = mainRegistry.blockConSmoke.getIcon(0,metadata);
+		float scale = 2*metadata;
+		sinTheta = Math.sin(theta);
+		cosTheta = Math.cos(theta);
+			//------------------next cachel
+		addVertex(tessellator,0-(1*scale), 0, 0.5,x,y,z,2, sideIron.getMaxU(), sideIron.getMaxV());
+		addVertex(tessellator,0-(1*scale), 3*scale, 0.5,x,y,z,2, sideIron.getMaxU(), sideIron.getMinV());
+		addVertex(tessellator,1+(1*scale),3*scale, 0.5,x,y,z,2, sideIron.getMinU(), sideIron.getMinV());
+		addVertex(tessellator,1+(1*scale), 0, 0.5,x,y,z,2, sideIron.getMinU(), sideIron.getMaxV());
+		theta = 84.822;
+		sinTheta = Math.sin(theta);
+		cosTheta = Math.cos(theta);
+		addVertex(tessellator,0-(1*scale), 0, 0.5,x+1,y,z+1,2, sideIron.getMaxU(), sideIron.getMaxV());
+		addVertex(tessellator,0-(1*scale), 3*scale, 0.5,x+1,y,z+1,2, sideIron.getMaxU(), sideIron.getMinV());
+		addVertex(tessellator,1+(1*scale),3*scale, 0.5,x+1,y,z+1,2, sideIron.getMinU(), sideIron.getMinV());
+		addVertex(tessellator,1+(1*scale), 0, 0.5,x+1,y,z+1,2, sideIron.getMinU(), sideIron.getMaxV());
+		theta = 84.822/2;
+		sinTheta = Math.sin(theta);
+		cosTheta = Math.cos(theta);
+		addVertex(tessellator,0-(1*scale), 0, 0.5,x+1,y,z,2, sideIron.getMaxU(), sideIron.getMaxV());
+		addVertex(tessellator,0-(1*scale), 3*scale, 0.5,x+1,y,z,2, sideIron.getMaxU(), sideIron.getMinV());
+		addVertex(tessellator,1+(1*scale),3*scale, 0.5,x+1,y,z,2, sideIron.getMinU(), sideIron.getMinV());
+		addVertex(tessellator,1+(1*scale), 0, 0.5,x+1,y,z,2, sideIron.getMinU(), sideIron.getMaxV());
+		theta = 84.822+84.822/2;
+		sinTheta = Math.sin(theta);
+		cosTheta = Math.cos(theta);
+		addVertex(tessellator,0-(1*scale), 0, 0.5,x,y,z+1,2, sideIron.getMaxU(), sideIron.getMaxV());
+		addVertex(tessellator,0-(1*scale), 3*scale, 0.5,x,y,z+1,2, sideIron.getMaxU(), sideIron.getMinV());
+		addVertex(tessellator,1+(1*scale),3*scale, 0.5,x,y,z+1,2, sideIron.getMinU(), sideIron.getMinV());
+		addVertex(tessellator,1+(1*scale), 0, 0.5,x,y,z+1,2, sideIron.getMinU(), sideIron.getMaxV());
+		tessellator.draw();
+		block.setBlockBoundsForItemRender();
+		GL11.glScalef(1f / 1.5f, 1f / 1.5f, 1f / 1.5f);
+		GL11.glTranslatef(0.5F, 1.2F, 0.5F);
 	}
 
 	@Override
@@ -131,7 +162,6 @@ public class RenderConSmoke implements ISimpleBlockRenderingHandler {
 				 posx = x * cosTheta + z * sinTheta;
 				 posz = z * cosTheta - x * sinTheta;		
 			}
-			System.out.println("x: "+x+"  y: "+y+"  z: "+z);
 			tessellator.addVertexWithUV(positionx+posx, positiony+posy, positionz+posz, iconX,iconY);   
 	}
 
